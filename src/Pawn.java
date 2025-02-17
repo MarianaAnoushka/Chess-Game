@@ -8,6 +8,9 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isValidMove(Position newPosition, Piece[][] board) {
+        if(newPosition.equals(position)) {
+            return false; //cannot move to same position
+        }
         int direction = color == PieceColor.WHITE ? -1 : 1;
         int rowDiff = ((newPosition.getRow() - position.getRow()) * direction);
         int colDiff = newPosition.getColumn() - position.getColumn();

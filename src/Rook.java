@@ -8,7 +8,9 @@ public class Rook extends Piece {
 
     @Override
     public boolean isValidMove(Position newPosition, Piece[][] board) {
-
+        if(newPosition.equals(position)) {
+            return false; //cannot move to same position
+        }
         //moving horizontally
         if(position.getRow() == newPosition.getRow()) {
             int colStart = Math.min(position.getColumn(), newPosition.getColumn());
@@ -19,7 +21,6 @@ public class Rook extends Piece {
                 }
             }
         }
-
         //moving vertically
         else if(position.getColumn() == newPosition.getColumn()) {
             int rowStart = Math.min(position.getRow(), newPosition.getRow());
@@ -30,7 +31,6 @@ public class Rook extends Piece {
                 }
             }
         }
-
         //check if we will be capturing a piece
         Piece destinationPiece = board[newPosition.getRow()][newPosition.getColumn()];
         if(destinationPiece == null) {
