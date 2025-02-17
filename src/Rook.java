@@ -36,11 +36,6 @@ public class Rook extends Piece {
         if(destinationPiece == null) {
             return true; //there is no piece to capture and the move is valid
         }
-        else if(destinationPiece.getColor() != this.color) {
-            return true; //the move is valid and we capture a piece
-        }
-        else {
-            return false; //the destination has a piece of the same color
-        }
+        else return destinationPiece.getColor() != this.color;
     }
 }
