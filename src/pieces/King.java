@@ -1,4 +1,8 @@
-package src;
+package src.pieces;
+
+import src.Piece;
+import src.Position;
+import src.PieceColor;
 
 public class King extends Piece {
 

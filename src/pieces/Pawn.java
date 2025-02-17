@@ -1,4 +1,8 @@
-package src;
+package src.pieces;
+
+import src.Piece;
+import src.Position;
+import src.PieceColor;
 
 public class Pawn extends Piece {
 
@@ -30,7 +34,7 @@ public class Pawn extends Piece {
         }
 
         //capturing a piece diagonally
-        if(Math.abs(colDiff) == 1 && rowDiff == 1 && board[newPosition.getRow()][newPosition.getColumn()] != null && board[newPosition.getRow()][newPosition.getColumn()].color != this.color) {
+        if(Math.abs(colDiff) == 1 && rowDiff == 1 && board[newPosition.getRow()][newPosition.getColumn()] != null && board[newPosition.getRow()][newPosition.getColumn()].getColor() != this.color) {
             return true;
         }
         return false;
