@@ -21,7 +21,7 @@ public class ChessGame {
     }
 
     private boolean isValidPosition(Position position) {
-        return false;
+        return position.getRow() >= 0 && position.getRow() < board.getBoard().length && position.getColumn() >= 0 && position.getColumn() < board.getBoard()[0].length;
     }
 
     private Position findKingPosition(PieceColor kingColor) {
