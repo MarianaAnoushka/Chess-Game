@@ -1,16 +1,10 @@
 package src;
-
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import src.App;
 import src.pieces.Bishop;
 import src.pieces.King;
 import src.pieces.Knight;
 import src.pieces.Pawn;
 import src.pieces.Queen;
 import src.pieces.Rook;
-
-import java.util.ArrayList;
 
 public class ChessBoard {
     private Piece[][] board;

@@ -4,9 +4,14 @@ import src.pieces.King;
 public class ChessGame {
     private ChessBoard board;
     private boolean whiteTurn = true;
+    private Position selectedPosition;
 
     public ChessGame() {
         this.board = new ChessBoard();
+    }
+
+    public ChessBoard getBoard() {
+        return this.board;
     }
 
     public boolean makeMove(Position start, Position end) {
@@ -84,5 +89,42 @@ public class ChessGame {
         board.setPiece(end.getRow(), end.getColumn(), temp);
   
         return inCheck;
+    }
+
+    public PieceColor getCurrentPlayerColor() {
+        if(whiteTurn) {
+            return PieceColor.WHITE;
+        }
+        else {
+            return PieceColor.BLACK;
+        }
+    }
+
+    public void resetGame() {
+        this.board = new ChessBoard(); // Re-initialize the board
+        this.whiteTurn = true; // Reset turn to white
+    }
+
+    public boolean isPieceSelected() {
+        return selectedPosition != null;
+    }
+
+    public boolean handleSquareSelection(int row, int col) {
+        if (selectedPosition == null) {
+            // Attempt to select a piece
+            Piece selectedPiece = board.getPiece(row, col);
+            if (selectedPiece != null
+                    && selectedPiece.getColor() == (whiteTurn ? PieceColor.WHITE : PieceColor.BLACK)) {
+                selectedPosition = new Position(row, col);
+                return false; // Indicate a piece was selected but not moved
+            }
+        } 
+        else {
+            // Attempt to move the selected piece
+            boolean moveMade = makeMove(selectedPosition, new Position(row, col));
+            selectedPosition = null; // Reset selection regardless of move success
+            return moveMade; // Return true if a move was successfully made
+        }
+        return false; // Return false if no piece was selected or move was not made
     }
 }
