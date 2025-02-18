@@ -38,8 +38,23 @@ public class ChessGame {
     }
 
     public boolean inCheckmate(PieceColor kingColor) {
-
-        return false;
+        if (!inCheck(kingColor)) {
+            return false; // Not in check, so cannot be checkmate
+        }
+        Position kingPosition = findKingPosition(kingColor);
+        King king = (King) board.getPiece(kingPosition.getRow(), kingPosition.getColumn());
+        for (int rowOffset = -1; rowOffset <= 1; rowOffset++) {
+            for (int colOffset = -1; colOffset <= 1; colOffset++) {
+                if (rowOffset == 0 && colOffset == 0) {
+                    continue; // Skip the current position of the king
+                }
+                Position newPosition = new Position(kingPosition.getRow() + rowOffset, kingPosition.getColumn() + colOffset);
+                if (isValidPosition(newPosition) && king.isValidMove(newPosition, board.getBoard()) && !wouldBeInCheck(kingColor, kingPosition, newPosition)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private boolean isValidPosition(Position position) {
@@ -59,6 +74,15 @@ public class ChessGame {
     }
 
     private boolean wouldBeInCheck(PieceColor kingColor, Position start, Position end) {
-        return false;
+        Piece temp = board.getPiece(end.getRow(), end.getColumn());
+        board.setPiece(end.getRow(), end.getColumn(), board.getPiece(start.getRow(), start.getColumn()));
+        board.setPiece(start.getRow(), start.getColumn(), null);
+  
+        boolean inCheck = inCheck(kingColor);
+        // Undo the move
+        board.setPiece(start.getRow(), start.getColumn(), board.getPiece(end.getRow(), end.getColumn()));
+        board.setPiece(end.getRow(), end.getColumn(), temp);
+  
+        return inCheck;
     }
 }
